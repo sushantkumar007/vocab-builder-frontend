@@ -55,8 +55,8 @@ export function SignupForm({ className, ...props }) {
     <div className={cn("flex flex-col gap-6", className)} {...props}>
       <Card>
         <CardHeader className="text-center">
-          <CardTitle className="text-xl">Welcome back</CardTitle>
-          <CardDescription>Login with your Google account</CardDescription>
+          <CardTitle className="text-xl">Create account</CardTitle>
+          <CardDescription>Sign up with your Google account</CardDescription>
         </CardHeader>
         <CardContent>
           <form onSubmit={handleSubmit(signupSubmit)}>
@@ -69,7 +69,7 @@ export function SignupForm({ className, ...props }) {
                       fill="currentColor"
                     />
                   </svg>
-                  Login with Google
+                  Signup with Google
                 </Button>
               </Field>
               <FieldSeparator className="*:data-[slot=field-separator-content]:bg-card">
@@ -116,7 +116,7 @@ export function SignupForm({ className, ...props }) {
                 <Input
                   id="email"
                   type="email"
-                  placeholder="m@example.com"
+                  placeholder="email@example.com"
                   required
                   className={`py-5 ${errors.email ? "border-destructive focus-visible:border-destructive" : ""}`}
                   {...register("email", {
@@ -176,6 +176,7 @@ export function SignupForm({ className, ...props }) {
                     })}
                   />
                   <button
+                    type="button"
                     variant="ghost"
                     size="icon"
                     onClick={() => setShowPassword((prev) => !prev)}

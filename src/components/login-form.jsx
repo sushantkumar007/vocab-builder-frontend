@@ -28,10 +28,11 @@ import {
 import { Input } from "@/components/ui/input";
 import { Spinner } from "@/components/ui/spinner";
 import { Alert, AlertDescription } from "@/components/ui/alert";
-import { AlertCircle } from "lucide-react";
+import { AlertCircle, Eye, EyeOff } from "lucide-react";
 
 export function LoginForm({ className, ...props }) {
   const [loading, setLoading] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
   const [serverError, setServerError] = useState(null);
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -65,7 +66,7 @@ export function LoginForm({ className, ...props }) {
       <Card>
         <CardHeader className="text-center">
           <CardTitle className="text-xl">Welcome back</CardTitle>
-          <CardDescription>Login with your Google account</CardDescription>
+          <CardDescription>Sign in with your Google account</CardDescription>
         </CardHeader>
         <CardContent>
           <form onSubmit={handleSubmit(loginSubmit)}>
@@ -78,7 +79,7 @@ export function LoginForm({ className, ...props }) {
                       fill="currentColor"
                     />
                   </svg>
-                  Login with Google
+                  Signin with Google
                 </Button>
               </Field>
               <FieldSeparator className="*:data-[slot=field-separator-content]:bg-card">
@@ -95,7 +96,7 @@ export function LoginForm({ className, ...props }) {
                 <Input
                   id="email"
                   type="email"
-                  placeholder="m@example.com"
+                  placeholder="email@example.com"
                   required
                   className={`py-5 ${errors.email ? "border-destructive" : ""}`}
                   {...register("email", {
@@ -135,23 +136,39 @@ export function LoginForm({ className, ...props }) {
                     Forgot your password?
                   </a>
                 </div>
-                <Input
-                  id="password"
-                  type="password"
-                  required
-                  className={`py-5 ${errors.password ? "border-destructive" : ""}`}
-                  {...register("password", {
-                    required: true,
-                    minLength: {
-                      message: "Password must be at least 8 characters",
-                      value: 8,
-                    },
-                    maxLength: {
-                      message: "Password must be at most 128 characters",
-                      value: 128,
-                    },
-                  })}
-                />
+                <div className="relative">
+                  <Input
+                    id="password"
+                    type={showPassword ? "text" : "password"}
+                    placeholder="P@ssw0rd123"
+                    required
+                    className={`py-5 ${errors.password ? "border-destructive" : ""}`}
+                    {...register("password", {
+                      required: true,
+                      minLength: {
+                        message: "Password must be at least 8 characters",
+                        value: 8,
+                      },
+                      maxLength: {
+                        message: "Password must be at most 128 characters",
+                        value: 128,
+                      },
+                    })}
+                  />
+                  <button
+                    type="button"
+                    variant="ghost"
+                    size="icon"
+                    onClick={() => setShowPassword((prev) => !prev)}
+                    className="absolute right-1 top-1/2 w-8 h-8 -translate-y-1/2 text-muted-foreground"
+                  >
+                    {showPassword ? (
+                      <EyeOff className="w-4 h-4" />
+                    ) : (
+                      <Eye className="w-4 h-4" />
+                    )}
+                  </button>
+                </div>
                 {errors.password && (
                   <FieldDescription className="text-destructive">
                     {errors.password.message}
