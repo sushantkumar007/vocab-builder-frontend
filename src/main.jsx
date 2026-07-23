@@ -6,9 +6,12 @@ import { store } from "./store/store.js";
 import { Provider } from "react-redux";
 import "./index.css";
 import App from "./App.jsx";
+import Protected from "./components/AuthLayout.jsx";
 
 // Import pages
 import HomePage from "./pages/HomePage.jsx";
+import SignupPage from "./pages/SignupPage.jsx";
+import LoginPage from "./pages/LoginPage.jsx";
 
 const router = createBrowserRouter([
   {
@@ -18,6 +21,22 @@ const router = createBrowserRouter([
       {
         path: "",
         element: <HomePage />,
+      },
+      {
+        path: "signup",
+        element: (
+          <Protected authentication={false}>
+            <SignupPage />
+          </Protected>
+        ),
+      },
+      {
+        path: "login",
+        element: (
+          <Protected authentication={false}>
+            <LoginPage />
+          </Protected>
+        ),
       },
     ],
   },
