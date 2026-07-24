@@ -4,6 +4,7 @@ import { useDispatch } from "react-redux";
 import { getCurrentUser } from "./services/auth.service.js";
 import { login, logout } from "./store/userSlice.js";
 import PageLoader from "./components/PageLoader.jsx";
+import Navbar from "./components/Navbar.jsx";
 
 function App() {
   const [loading, setLoading] = useState(true);
@@ -23,7 +24,20 @@ function App() {
       });
   });
 
-  return <>{loading ? <PageLoader /> : <Outlet />}</>;
+  return (
+    <>
+      {loading ? (
+        <PageLoader />
+      ) : (
+        <section className="bg-muted">
+          <Navbar />
+          <main className="">
+            <Outlet />
+          </main>
+        </section>
+      )}
+    </>
+  );
 }
 
 export default App;

@@ -203,12 +203,12 @@ export function SignupForm({ className, ...props }) {
               )}
               <Field>
                 {loading ? (
-                  <Button type="submit" className="py-5" disabled>
+                  <Button type="submit" className="py-5.5" disabled>
                     <Spinner className="mr-2 h-4 w-4 animate-spin" />
                     Creating account...
                   </Button>
                 ) : (
-                  <Button type="submit" className="py-5">
+                  <Button type="submit" className="py-5.5">
                     Register
                   </Button>
                 )}
