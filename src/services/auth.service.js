@@ -1,4 +1,5 @@
 import { axiosInstance } from "./axios.js";
+
 export const register = async ({ name, email, password }) => {
   try {
     const res = await axiosInstance.post("/users/register", {
