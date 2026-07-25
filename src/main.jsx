@@ -12,6 +12,7 @@ import Protected from "./components/AuthLayout.jsx";
 import HomePage from "./pages/HomePage.jsx";
 import SignupPage from "./pages/SignupPage.jsx";
 import LoginPage from "./pages/LoginPage.jsx";
+import WordsPage from "./pages/WordsPage.jsx";
 
 const router = createBrowserRouter([
   {
@@ -37,6 +38,10 @@ const router = createBrowserRouter([
             <LoginPage />
           </Protected>
         ),
+      },
+      {
+        path: ":word",
+        element: <WordsPage />,
       },
     ],
   },
