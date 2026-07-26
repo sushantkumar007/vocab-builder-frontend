@@ -1,37 +1,33 @@
-import { useState, useEffect } from "react";
-import { useParams, useNavigate } from "react-router";
+import { useState } from "react";
 import { getWords } from "../services/word.service.js";
-import PageLoader from "../components/PageLoader.jsx";
 import WordDetails from "../components/WordDetails.jsx";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useForm } from "react-hook-form";
+import { Loader2 } from "lucide-react";
 
 function WordsPage() {
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
   const [word, setWord] = useState(null);
+  const [error, setError] = useState(null);
   const { register, handleSubmit } = useForm({});
-  const { word: searchWord } = useParams();
-  const navigate = useNavigate();
 
-  const handleSearch = ({ word }) => {
-    setWord(null);
-    navigate(`/${word}`);
-  };
+  console.log(error);
 
-  useEffect(() => {
-    getWords(searchWord)
-      .then(({ data }) => {
+  const handleSearch = async ({ word }) => {
+    try {
+      setLoading(true);
+      setError(null);
+      const { data } = await getWords(word);
+      if (data && data.words.length > 0) {
         setWord(data.words[0]);
-      })
-      .finally(() => {
-        setLoading(false);
-      });
-  }, [searchWord]);
-
-  if (loading) {
-    return <PageLoader />;
-  }
+      }
+    } catch (error) {
+      setError(error.message || "Word not found. Please try again.");
+    } finally {
+      setLoading(false);
+    }
+  };
 
   return (
     <section className="w-full min-h-screen bg-muted pb-8">
@@ -52,7 +48,13 @@ function WordsPage() {
             </Button>
           </form>
         </div>
-        {word ? <WordDetails word={word} /> : <div>Word not found</div>}
+        <div></div>
+        {loading && (
+          <div className=" w-full min-h-[50vh] flex items-center justify-center mt-4">
+            <Loader2 className="h-10 w-10 animate-spin text-primary" />
+          </div>
+        )}
+        {word && !loading ? <WordDetails word={word} /> : null}
       </div>
     </section>
   );
