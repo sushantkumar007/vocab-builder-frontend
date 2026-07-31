@@ -56,7 +56,7 @@ export function SignupForm({ className, ...props }) {
       <Card>
         <CardHeader className="text-center">
           <CardTitle className="text-xl">Create account</CardTitle>
-          <CardDescription>Sign up with your Google account</CardDescription>
+          <CardDescription>Sign in with your Google account</CardDescription>
         </CardHeader>
         <CardContent>
           <form onSubmit={handleSubmit(signupSubmit)}>
@@ -69,7 +69,7 @@ export function SignupForm({ className, ...props }) {
                       fill="currentColor"
                     />
                   </svg>
-                  Signup with Google
+                  Signin with Google
                 </Button>
               </Field>
               <FieldSeparator className="*:data-[slot=field-separator-content]:bg-card">

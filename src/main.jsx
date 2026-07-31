@@ -20,7 +20,7 @@ const router = createBrowserRouter([
     element: <App />,
     children: [
       {
-        path: "",
+        path: "/home",
         element: <HomePage />,
       },
       {
@@ -40,7 +40,7 @@ const router = createBrowserRouter([
         ),
       },
       {
-        path: ":word",
+        path: "",
         element: <WordsPage />,
       },
     ],

@@ -1,10 +1,18 @@
+import { useState } from "react";
+import {
+  addToWatchlist,
+  removeFromWatchlist,
+} from "../services/watchlist.service.js";
+
+// UI Components
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
-import { Volume2 } from "lucide-react";
+import { Bookmark, Volume2 } from "lucide-react";
 
 function WordDetails({ word }) {
+  const [isBookmarked, setIsBookmarked] = useState(false);
   const playAudio = () => {
     if (!word.audio) return;
 
@@ -12,13 +20,34 @@ function WordDetails({ word }) {
     audio.play();
   };
 
+  const handleWatchlistToggle = async () => {
+    try {
+      if (isBookmarked) {
+        await removeFromWatchlist(word.id);
+        setIsBookmarked(false);
+      } else if (!isBookmarked) {
+        await addToWatchlist(word.id);
+        setIsBookmarked(true);
+      }
+    } catch (error) {
+      console.error(`Error toggling watchlist: ${error.message}`);
+    }
+  };
+
   return (
-    <Card className="h-fit rounded-none sm:rounded-2xl sm:m-4 md:mt-4">
+    <Card className="h-fit rounded-none sm:rounded-lg sm:m-4 md:mt-4">
       <CardContent className="space-y-6 p-6">
         {/* Header */}
         <div className="flex items-start justify-between">
           <div>
-            <h1 className="text-4xl font-bold capitalize">{word.word}</h1>
+            <div className="flex items-center gap-4">
+              <h1 className="text-4xl font-bold capitalize">{word.word}</h1>
+              {word.audio && (
+                <Button size="icon" variant="outline" onClick={playAudio}>
+                  <Volume2 className="h-5 w-5" />
+                </Button>
+              )}
+            </div>
 
             <div className="mt-2 flex flex-wrap gap-2">
               <Badge>{word.partOfSpeech}</Badge>
@@ -29,11 +58,17 @@ function WordDetails({ word }) {
             </div>
           </div>
 
-          {word.audio && (
-            <Button size="icon" variant="outline" onClick={playAudio}>
-              <Volume2 className="h-5 w-5" />
-            </Button>
-          )}
+          <button
+            size="icon"
+            variant="none"
+            className=""
+            onClick={() => handleWatchlistToggle()}
+          >
+            <Bookmark
+              className="size-6"
+              fill={isBookmarked ? "currentColor" : "none"}
+            />
+          </button>
         </div>
 
         <Separator />
