@@ -5,13 +5,19 @@ import { Input } from "@/components/ui/input";
 import { Loader2 } from "lucide-react";
 import WordDetails from "../components/WordDetails.jsx";
 import WatchlistDetails from "../components/WatchlistDetails.jsx";
+import CategoriesDetails from "../components/CategoriesDetails.jsx";
 import { getWords } from "../services/word.service.js";
 import { getWatchlist } from "../services/watchlist.service.js";
+import {
+  getCategories,
+  getWordsFromCategory,
+} from "../services/categories.service.js";
 
 function WordsPage() {
   const [loading, setLoading] = useState(false);
   const [word, setWord] = useState(null);
   const [watchlist, setWatchlist] = useState(null);
+  const [categories, setCategories] = useState(null);
   const [currentTab, setCurrentTab] = useState("home");
   const { register, handleSubmit } = useForm({});
 
@@ -52,6 +58,40 @@ function WordsPage() {
     }
   };
 
+  const showCategories = async () => {
+    try {
+      setLoading(true);
+      setCurrentTab("categories");
+
+      const { data } = await getCategories();
+
+      const categoriesData = await Promise.all(
+        data.categories.map(async ({ id, name, description }) => {
+          const { data } = await getWordsFromCategory(id);
+
+          const words = data.wordsInCategory.map(({ word }) => {
+            return word;
+          });
+
+          return {
+            id,
+            name,
+            description,
+            words,
+          };
+        }),
+      );
+
+      setCategories(categoriesData);
+    } catch (error) {
+      console.error(
+        error.message || "Failed to fetch categories. Please try again.",
+      );
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
     <section className="w-full min-h-screen bg-muted pb-8">
       <div className="w-full md:w-3xl mx-auto">
@@ -86,6 +126,13 @@ function WordsPage() {
           >
             Watchlist
           </Button>
+          <Button
+            variant={currentTab === "categories" ? "default" : "outline"}
+            className="mr-2"
+            onClick={() => showCategories()}
+          >
+            Categories
+          </Button>
         </div>
         {loading && (
           <div className=" w-full min-h-[50vh] flex items-center justify-center mt-4">
@@ -97,6 +144,9 @@ function WordsPage() {
         ) : null}
         {currentTab === "watchlist" && !loading ? (
           <WatchlistDetails watchlist={watchlist} />
+        ) : null}
+        {currentTab === "categories" && !loading ? (
+          <CategoriesDetails categories={categories} />
         ) : null}
       </div>
     </section>
