@@ -17,7 +17,7 @@ export const register = async ({ name, email, password }) => {
 
 export const verifyEmail = async (emailVerificationToken) => {
   try {
-    const res = await axiosInstance.post(
+    const res = await axiosInstance.get(
       `/users/verify-email/${emailVerificationToken}`,
     );
     return res.data;

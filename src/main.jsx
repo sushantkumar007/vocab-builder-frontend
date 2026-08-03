@@ -13,6 +13,9 @@ import HomePage from "./pages/HomePage.jsx";
 import SignupPage from "./pages/SignupPage.jsx";
 import LoginPage from "./pages/LoginPage.jsx";
 import WordsPage from "./pages/WordsPage.jsx";
+import EmailVerificationPage from "./pages/email/EmailVerificationPage.jsx";
+import EmailVerificationRequestPage from "./pages/email/EmailVerificationRequestPage.jsx";
+import EmailVerificationNoticePage from "./pages/email/EmailVerificationNoticePage.jsx";
 
 const router = createBrowserRouter([
   {
@@ -20,7 +23,7 @@ const router = createBrowserRouter([
     element: <App />,
     children: [
       {
-        path: "/home",
+        path: "home",
         element: <HomePage />,
       },
       {
@@ -42,6 +45,23 @@ const router = createBrowserRouter([
       {
         path: "",
         element: <WordsPage />,
+      },
+      {
+        path: "verify-email",
+        children: [
+          {
+            path: "",
+            element: <EmailVerificationNoticePage />,
+          },
+          {
+            path: ":token",
+            element: <EmailVerificationPage />,
+          },
+          {
+            path: "request",
+            element: <EmailVerificationRequestPage />,
+          },
+        ],
       },
     ],
   },

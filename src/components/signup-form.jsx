@@ -42,7 +42,11 @@ export function SignupForm({ className, ...props }) {
       setLoading(true);
       const res = await registerService(data);
       if (res) {
-        navigate("/");
+        navigate("/verify-email", {
+          state: {
+            fromSignup: true,
+          },
+        });
       }
     } catch (error) {
       setServerError(error.message || "Signup failed. Please try again.");
