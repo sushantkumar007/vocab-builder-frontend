@@ -46,8 +46,8 @@ export default function EmailVerificationRequestPage() {
 
   if (status === "success") {
     return (
-      <div className="flex justify-center bg-muted/40 mt-16 sm:mt-8 p-6 md:p-10">
-        <Card className="w-full max-w-md shadow-lg">
+      <div className="min-h-[calc(100vh-64px)] flex items-start justify-center">
+        <Card className="w-full max-w-sm mt-12 sm:mt-6">
           <CardHeader className="text-center space-y-5">
             <div className="mx-auto flex h-20 w-20 items-center justify-center rounded-full bg-green-100">
               <MailCheck className="h-10 w-10 text-green-600" />
@@ -95,8 +95,8 @@ export default function EmailVerificationRequestPage() {
   }
 
   return (
-    <div className="min-h-screen flex items-start justify-center bg-muted/40 mt-12 sm:mt-8 p-6 md:p-10">
-      <Card className="w-full max-w-md shadow-lg">
+    <div className="min-h-[calc(100vh-64px)] flex items-start justify-center">
+      <Card className="w-full max-w-sm mt-12 sm:mt-6">
         <CardHeader className="text-center space-y-5">
           <div className="mx-auto flex h-20 w-20 items-center justify-center rounded-full bg-blue-100">
             <Mail className="h-10 w-10 text-blue-600" />
@@ -124,7 +124,7 @@ export default function EmailVerificationRequestPage() {
             )}
 
             <div className="space-y-2">
-              <Label htmlFor="email">Email Address</Label>
+              <Label htmlFor="email">Email</Label>
               <Input
                 id="email"
                 type="email"

@@ -30,7 +30,7 @@ export default function EmailVerificationPage() {
   }, [emailVerificationToken]);
 
   return (
-    <section>
+    <section className="min-h-[calc(100vh-64px)] flex items-start justify-center bg-muted/40">
       {loading && <PageLoader />}
       {!loading && isEmailVerified && <EmailVerificationSuccess />}
       {!loading && !isEmailVerified && <EmailVerificationFailed />}

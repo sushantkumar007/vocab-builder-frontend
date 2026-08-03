@@ -219,6 +219,9 @@ export function SignupForm({ className, ...props }) {
 
                 <FieldDescription className="text-center">
                   Already have an account? <Link to="/login">Sign in</Link>
+                  <br />
+                  Email is not verified?{" "}
+                  <Link to="/verify-email/request">Verify email</Link>
                 </FieldDescription>
               </Field>
             </FieldGroup>
