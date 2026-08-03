@@ -194,7 +194,10 @@ export function LoginForm({ className, ...props }) {
                 )}
 
                 <FieldDescription className="text-center">
-                  Don&apos;t have an account? <Link to="/signup">Sign up</Link>
+                  Do not have an account? <Link to="/signup">Sign up</Link>
+                  <br />
+                  Email is not verified?{" "}
+                  <Link to="/verify-email/request">Verify email</Link>
                 </FieldDescription>
               </Field>
             </FieldGroup>
