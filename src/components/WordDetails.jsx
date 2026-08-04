@@ -1,6 +1,7 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import {
   addToWatchlist,
+  getWatchlist,
   removeFromWatchlist,
 } from "../services/watchlist.service.js";
 
@@ -19,6 +20,26 @@ function WordDetails({ word }) {
     const audio = new Audio(word.audio);
     audio.play();
   };
+
+  useEffect(() => {
+    const checkIfBookmarked = async () => {
+      try {
+        const { data } = await getWatchlist();
+
+        const isWordInWatchlist = data.watchlist.some(
+          ({ word: wordFromWatchlist }) => {
+            return word.id === wordFromWatchlist.id;
+          },
+        );
+
+        setIsBookmarked(isWordInWatchlist);
+      } catch (error) {
+        console.error(`Error checking watchlist: ${error.message}`);
+      }
+    };
+
+    checkIfBookmarked();
+  });
 
   const handleWatchlistToggle = async () => {
     try {
