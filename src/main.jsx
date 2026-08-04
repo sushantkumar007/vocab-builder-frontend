@@ -12,6 +12,8 @@ import Protected from "./components/AuthLayout.jsx";
 import HomePage from "./pages/HomePage.jsx";
 import SignupPage from "./pages/SignupPage.jsx";
 import LoginPage from "./pages/LoginPage.jsx";
+import ResetPasswordRequestPage from "./pages/ResetPasswordRequestPage.jsx";
+import ResetPasswordPage from "./pages/ResetPasswordPage.jsx";
 import WordsPage from "./pages/WordsPage.jsx";
 import EmailVerificationPage from "./pages/email/EmailVerificationPage.jsx";
 import EmailVerificationRequestPage from "./pages/email/EmailVerificationRequestPage.jsx";
@@ -41,6 +43,19 @@ const router = createBrowserRouter([
             <LoginPage />
           </Protected>
         ),
+      },
+      {
+        path: "reset-password",
+        children: [
+          {
+            path: "request",
+            element: <ResetPasswordRequestPage />,
+          },
+          {
+            path: ":token",
+            element: <ResetPasswordPage />,
+          },
+        ],
       },
       {
         path: "",
