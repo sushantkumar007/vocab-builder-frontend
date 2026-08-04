@@ -91,10 +91,11 @@ export const resetPassordRequest = async ({ email }) => {
   }
 };
 
-export const resetPassword = async (resetPasswordToken) => {
+export const resetPassword = async ({ resetPasswordToken, password }) => {
   try {
     const res = await axiosInstance.patch(
       `/users/reset-password/${resetPasswordToken}`,
+      { newPassword: password },
     );
     return res.data;
   } catch (error) {
